@@ -39,6 +39,7 @@ df = df.groupby('time').apply(mean_time)
 df.plot(x='time', y='count', kind='line')
 #plt.show()
 
+'''广告商品信息 '''
 fig = plt.figure(figsize=(40,40))
 #item_price_level直方图
 plt.subplot(231)
@@ -77,4 +78,47 @@ print(len((np.where(df.groupby('item_id').count()['instance_id']<500))[0]))#9908
 
 #plt.tight_layout() #设置默认的间距
 plt.subplots_adjust(wspace=0.2, hspace=0.3)
+#plt.show()
+
+''' 上下文信息'''
+fig1 = plt.figure()
+#context_page_id直方图
+plt.subplot(111)
+plt.title('context_page_id')
+df['context_page_id'].hist(bins=50)
+print('这个字段很奇怪，数据低于4001的数量为0，但是这不是页数么 ',len(np.where(df["context_page_id"]>4002)[0]))
+
+'''店铺信息'''
+fig2 = plt.figure(figsize=(40,40))
+#shop_review_num_level直方图
+plt.subplot(231)
+plt.title('shop_review_num_level')
+df['shop_review_num_level'].hist(bins=10)
+
+#shop_review_positive_rate直方图
+plt.subplot(232)
+plt.title('shop_review_positive_rate')
+df['shop_review_positive_rate'].hist(bins=100)
+
+#shop_star_level直方图
+plt.subplot(233)
+plt.title('shop_star_level')
+df['shop_star_level'].hist(bins=20)
+
+#shop_score_service直方图
+plt.subplot(234)
+plt.title('shop_score_service')
+df['shop_score_service'].hist(bins=100)
+
+#shop_score_delivery直方图
+plt.subplot(235)
+plt.title('shop_score_delivery')
+df['shop_score_delivery'].hist(bins=100)
+
+#shop_score_description直方图
+plt.subplot(236)
+plt.title('shop_score_description')
+df['shop_score_description'].hist(bins=100)
+
 plt.show()
+
