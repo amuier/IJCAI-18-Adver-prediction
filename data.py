@@ -5,6 +5,7 @@ from matplotlib import pyplot as plt
 
 df = pd.DataFrame(pd.read_table('round1_ijcai_18_train_20180301.txt', header=0, delim_whitespace=True))
 
+'''----------------将编号重新labelEncoder-------------------'''
 le = preprocessing.LabelEncoder()
 #item_brand_id 数据转换
 le.fit(df['item_brand_id'])
@@ -39,7 +40,7 @@ df = df.groupby('time').apply(mean_time)
 df.plot(x='time', y='count', kind='line')
 #plt.show()
 
-'''广告商品信息 '''
+'''-----------------广告商品信息处理--------------- '''
 fig = plt.figure(figsize=(40,40))
 #item_price_level直方图
 plt.subplot(231)
@@ -88,7 +89,74 @@ plt.title('context_page_id')
 df['context_page_id'].hist(bins=50)
 print('这个字段很奇怪，数据低于4001的数量为0，但是这不是页数么 ',len(np.where(df["context_page_id"]>4002)[0]))
 
-'''店铺信息'''
+
+
+''' -------------- 用户信息数据处理 ------------------'''
+print('-----------user_gender_id--------------')
+print(df['user_gender_id'].describe())
+print('-----------user_age_level--------------')
+print(df['user_age_level'].describe())
+print('-----------user_occupation_id--------------')
+print(df['user_occupation_id'].describe())
+print('-----------user_star_level--------------')
+print(df['user_star_level'].describe())
+
+#类别数据，直接将-1值置为众数
+df['user_gender_id']=df['user_gender_id'].replace(-1, 0)
+df['user_age_level']=df['user_age_level'].replace(-1, 1004)
+df['user_occupation_id']=df['user_occupation_id'].replace(-1, 2005)
+df['user_star_level']=df['user_star_level'].replace(-1, 3006)
+
+
+fig2 = plt.figure(figsize=(40,40))
+#user_gender_id直方图
+plt.subplot(221)
+plt.title('user_gender_id')
+df['user_gender_id'].hist(bins=10)
+
+#user_age_level直方图
+plt.subplot(222)
+plt.title('user_age_level')
+df['user_age_level'].hist(bins=20)
+
+#user_occupation_id直方图
+plt.subplot(223)
+plt.title('user_occupation_id')
+df['user_occupation_id'].hist(bins=20)
+
+#user_star_level直方图
+plt.subplot(224)
+plt.title('user_star_level')
+df['user_star_level'].hist(bins=20)
+
+
+
+'''--------------------店铺信息处理-------------------'''
+print('-----------shop_review_num_level--------------')
+print(df['shop_review_num_level'].describe())
+print('-----------shop_review_positive_rate--------------')
+print(df['shop_review_positive_rate'].describe())
+print('-----------shop_star_level--------------')
+print(df['shop_star_level'].describe())
+print('-----------shop_score_service--------------')
+print(df['shop_score_service'].describe())
+print('-----------shop_score_delivery--------------')
+print(df['shop_score_delivery'].describe())
+print('-----------shop_score_description--------------')
+print(df['shop_score_description'].describe())
+
+#先将-1置为空，然后求得各个值的均值
+df['shop_review_positive_rate']=df['shop_review_positive_rate'].replace(-1, np.nan)
+df['shop_score_service']=df['shop_score_service'].replace(-1, np.nan)
+df['shop_score_delivery']=df['shop_score_delivery'].replace(-1, np.nan)
+df['shop_score_description']=df['shop_score_description'].replace(-1, np.nan)
+
+# 再将空值置为均值
+df['shop_review_positive_rate']=df['shop_review_positive_rate'].replace(np.nan, 0.994859)
+df['shop_score_service']=df['shop_score_service'].replace(np.nan, 0.971367)
+df['shop_score_delivery']=df['shop_score_delivery'].replace(np.nan, 0.970740)
+df['shop_score_description']=df['shop_score_description'].replace(np.nan, 0.975107)
+
 fig2 = plt.figure(figsize=(40,40))
 #shop_review_num_level直方图
 plt.subplot(231)
@@ -98,7 +166,7 @@ df['shop_review_num_level'].hist(bins=10)
 #shop_review_positive_rate直方图
 plt.subplot(232)
 plt.title('shop_review_positive_rate')
-df['shop_review_positive_rate'].hist(bins=100)
+df['shop_review_positive_rate'].hist(bins=20)
 
 #shop_star_level直方图
 plt.subplot(233)
@@ -108,17 +176,17 @@ df['shop_star_level'].hist(bins=20)
 #shop_score_service直方图
 plt.subplot(234)
 plt.title('shop_score_service')
-df['shop_score_service'].hist(bins=100)
+df['shop_score_service'].hist(bins=40)
 
 #shop_score_delivery直方图
 plt.subplot(235)
 plt.title('shop_score_delivery')
-df['shop_score_delivery'].hist(bins=100)
+df['shop_score_delivery'].hist(bins=40)
 
 #shop_score_description直方图
 plt.subplot(236)
 plt.title('shop_score_description')
-df['shop_score_description'].hist(bins=100)
+df['shop_score_description'].hist(bins=40)
+
 
 plt.show()
-
