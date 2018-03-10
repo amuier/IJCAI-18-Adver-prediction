@@ -203,3 +203,22 @@ df['shop_score_description'].hist(bins=40)
 #plt.tight_layout() #设置默认的间距
 plt.subplots_adjust(wspace=0.2, hspace=0.3)
 plt.show()
+
+
+
+item_category_list = set()
+for i in range(len(df['item_category_list'])):
+    for j in df['item_category_list'][i].split(';'):
+        item_category_list.add(j)
+        
+print(len(item_category_list))# 16 有16个不同的类别
+print(item_category_list)
+
+
+item_property_list = set()
+for i in range(len(df['item_property_list'])):
+    for j in df['item_property_list'][i].split(';'):
+        item_property_list.add(j)
+        
+print(len(item_property_list)) # 61407 有这么多个属性
+print(item_property_list)
