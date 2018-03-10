@@ -41,6 +41,19 @@ df.plot(x='time', y='count', kind='line')
 #plt.show()
 
 '''-----------------广告商品信息处理--------------- '''
+#广告商品信息
+print('-----------item_price_level--------------')
+print(df['item_price_level'].describe())
+print('-----------item_sales_level--------------')
+print(df['item_sales_level'].describe())  #存在空值，需要处理
+print('-----------item_collected_level--------------')
+print(df['item_collected_level'].describe())
+print('-----------item_pv_level--------------')
+print(df['item_pv_level'].describe())
+
+df['item_sales_level']=df['item_sales_level'].replace(-1, np.nan)
+df['item_sales_level']=df['item_sales_level'].replace(np.nan, 11.157054) #在这里使用的是均值来替换（因为感觉不是长尾分布）
+
 fig = plt.figure(figsize=(40,40))
 #item_price_level直方图
 plt.subplot(231)
@@ -73,21 +86,20 @@ plt.title('item_id')
 #(df.groupby('item_id').count().sort_values(by='instance_id',ascending=False))['instance_id'].plot.hist(bins=10,grid=True)
 df.groupby('item_id').count()['instance_id'].plot.hist(bins=50,grid=True)
 
-#样本中商品出现频数大于1000的商品数和出现频数小于500的商品数（应该就是长尾分布）
+#样本中商品出现频数大于1000的商品数和出现频数小于500的商品数
 print(len((np.where(df.groupby('item_id').count()['instance_id']>1000))[0]))#45
 print(len((np.where(df.groupby('item_id').count()['instance_id']<500))[0]))#9908
 
-#plt.tight_layout() #设置默认的间距
-plt.subplots_adjust(wspace=0.2, hspace=0.3)
-#plt.show()
 
-''' 上下文信息'''
+''' ----------------上下文信息---------------------'''
+print('--------------context_page_id----------------')
+print(df['context_page_id'].describe())#这个字段很奇怪，最小值4001
 fig1 = plt.figure()
 #context_page_id直方图
 plt.subplot(111)
 plt.title('context_page_id')
 df['context_page_id'].hist(bins=50)
-print('这个字段很奇怪，数据低于4001的数量为0，但是这不是页数么 ',len(np.where(df["context_page_id"]>4002)[0]))
+
 
 
 
@@ -157,7 +169,7 @@ df['shop_score_service']=df['shop_score_service'].replace(np.nan, 0.971367)
 df['shop_score_delivery']=df['shop_score_delivery'].replace(np.nan, 0.970740)
 df['shop_score_description']=df['shop_score_description'].replace(np.nan, 0.975107)
 
-fig2 = plt.figure(figsize=(40,40))
+fig3 = plt.figure(figsize=(40,40))
 #shop_review_num_level直方图
 plt.subplot(231)
 plt.title('shop_review_num_level')
@@ -188,5 +200,6 @@ plt.subplot(236)
 plt.title('shop_score_description')
 df['shop_score_description'].hist(bins=40)
 
-
+#plt.tight_layout() #设置默认的间距
+plt.subplots_adjust(wspace=0.2, hspace=0.3)
 plt.show()
