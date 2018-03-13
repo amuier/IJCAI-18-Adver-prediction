@@ -206,6 +206,19 @@ plt.show()
 
 
 
+# split for item_category_list
+df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['item_category_list'].str.split(';', -1).str
+
+
+# split for item_property_list
+print 'Max num: %d' % df['item_property_list'].str.split(';', -1).map(lambda x: len(x)).max() 
+# max 100 property
+tmp = ['item_property_%d' % i for i in range(0, 100)]
+tmp_df = df['item_property_list'].str.split(';', -1, expand=True)
+tmp_df.columns = tmp
+df = pd.concat([df, tmp_df], axis=1)
+
+
 item_category_list = set()
 for i in range(len(df['item_category_list'])):
     for j in df['item_category_list'][i].split(';'):
@@ -222,3 +235,4 @@ for i in range(len(df['item_property_list'])):
         
 print(len(item_property_list)) # 61407 有这么多个属性
 print(item_property_list)
+
