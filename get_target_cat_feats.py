@@ -3,43 +3,43 @@ import pandas as pd
 
 def get_ctg_feats():
 
-	df = pd.DataFrame(pd.read_table('tr.csv', header=0, delim_whitespace=True))
+    df = pd.DataFrame(pd.read_csv('tr.csv', header=0, delim_whitespace=True))
 
-	#item_category_list列 数据处理
-	df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].str.split(';', -1).str
+    #item_category_list列 数据处理
+    df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].str.split(';', -1).str
 
-	#形成新类别特征
-	cat_set=[]
-	c1=df['C1'].value_counts()
-	for i in c1[c1>2000].index:
-		cat_set.append('C1-'+str(i))
-		
-	c2_2=df['item_category_2'].value_counts()
-	for i in c2_2[c2_2>10000].index:
-		cat_set.append('C2-'+str(i))
-		
-	c4=df['C4'].value_counts()
-	for i in c4[c4>3000].index:
-		cat_set.append('C4-'+str(i))
-		
-	c5=df['C5'].value_counts()
-	for i in c5[c5>3000].index:
-		cat_set.append('C5-'+str(i))
-		
-	c6=df['C6'].value_counts()
-	for i in c6[c6>42].index:
-		cat_set.append('C6-'+str(i))    
-	 
-	cat_set.append('C7-0')
-	cat_set.append('C7-1')
-	cat_set.append('C8-2002')
-	cat_set.append('C8-2005')
+    #形成新类别特征
+    cat_set=[]
+    c1=df['C1'].value_counts()
+    for i in c1[c1>2000].index:
+        cat_set.append('C1-'+str(i))
 
-	c10=df['C10'].value_counts()
-	for i in c10[c10>3000].index:
-		cat_set.append('C10-'+str(i))
-		
-	return cat_set
+    c2_2=df['item_category_2'].value_counts()
+    for i in c2_2[c2_2>10000].index:
+        cat_set.append('C2-'+str(i))
+
+    c3=df['C3'].value_counts()
+    for i in c3[c3>3000].index:
+        cat_set.append('C3-'+str(i))
+
+    c4=df['C4'].value_counts()
+    for i in c4[c4>3000].index:
+        cat_set.append('C4-'+str(i))
+
+    c6=df['C5'].value_counts()
+    for i in c5[c5>42].index:
+        cat_set.append('C5-'+str(i))    
+
+    cat_set.append('C6-0')
+    cat_set.append('C6-1')
+    cat_set.append('C7-2002')
+    cat_set.append('C7-2005')
+
+    c8=df['C8'].value_counts()
+    for i in c8[c8>3000].index:
+        cat_set.append('C8-'+str(i))
+
+    return cat_set
 	'''
 	['C1-8268',
 	 'C1-3295',

@@ -78,15 +78,15 @@ df.rename(columns={'item_price_level':'I1', 'item_sales_level':'I2','item_collec
                    'shop_score_service':'I11','shop_score_delivery':'I12','shop_score_description':'I13',}, inplace = True)
 
 #修改类别变量的列名
-df.rename(columns={'item_id':'C1','item_category_list':'C2','item_property_list':'C3','item_brand_id':'C4','item_city_id':'C5',
-                  'user_id':'C6','user_gender_id':'C7','user_occupation_id':'C8','predict_category_property':'C9','shop_id':'C10'}, inplace = True)
+df.rename(columns={'item_id':'C1','item_category_list':'C2','item_brand_id':'C3','item_city_id':'C4',
+                  'user_id':'C5','user_gender_id':'C6','user_occupation_id':'C7','shop_id':'C8','item_property_list':'C9','predict_category_property':'C10'}, inplace = True)
 
 #修改is_trade列名为Label
 df.rename(columns={'is_trade':'Label'}, inplace = True)
 
-new_columns = ['Label','I1','I2','I3','I4','I5','I6','I7','I8','I9','I10','I11','I12','I13','C1','C2','C3','C4','C5','C6','C7','C8','C9','C10']
+new_columns = ['Label','I1','I2','I3','I4','I5','I6','I7','I8','I9','I10','I11','I12','I13','C1','C2','C3','C4','C5','C6','C7','C8']
 df.iloc[:20000].to_csv("tr_2w.csv",index=False,columns=new_columns)
-df.iloc[20001:28000].to_csv("te_8k.csv",index=False,columns=new_columns)
+df.iloc[20001:28000].to_csv("te_8k.csv",index=False,columns=new_columns)										
 
 '''
 # split for item_property_list
@@ -97,3 +97,6 @@ tmp_df = df['item_property_list'].str.split(';', -1, expand=True)
 tmp_df.columns = tmp
 df = pd.concat([df, tmp_df], axis=1)
 '''
+
+
+
