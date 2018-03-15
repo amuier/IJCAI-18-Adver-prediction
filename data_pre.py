@@ -85,6 +85,11 @@ df.rename(columns={'item_id':'C1','item_category_list':'C2','item_brand_id':'C3'
 df.rename(columns={'is_trade':'Label'}, inplace = True)
 
 #item_category_list列 数据处理
+'''
+item_category_1 所有的的样本都是同一个值
+item_category_2 一共有13个，我选N=10000,这样是取5个（N=5000的话,是取7个）
+item_category_3 只有2个值，，而且出现频率太低，才几百，相对2的都太低了，不要了
+'''
 df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].str.split(';', -1).str
 df['C2'] = df['item_category_2']
 

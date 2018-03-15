@@ -19,19 +19,11 @@ for i, row in enumerate(csv.DictReader(open(args['csv_path'])), start=1):
     for j in range(1, 9):
         field = 'C{0}'.format(j)
         value = row[field]
-        if j == 2:
-            for ctg_str in value.split(';'):
-                if label == '0':
-                    counts[field+','+ctg_str][0] += 1
-                else:
-                    counts[field+','+ctg_str][1] += 1
-                counts[field+','+ctg_str][2] += 1
+        if label == '0':
+            counts[field+','+value][0] += 1
         else:
-            if label == '0':
-                counts[field+','+value][0] += 1
-            else:
-                counts[field+','+value][1] += 1
-            counts[field+','+value][2] += 1
+            counts[field+','+value][1] += 1
+        counts[field+','+value][2] += 1
     if i % 1000000 == 0:
         sys.stderr.write('{0}m\n'.format(int(i/1000000)))
 

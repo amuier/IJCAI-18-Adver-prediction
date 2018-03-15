@@ -40,13 +40,8 @@ with open(args['dense_path'], 'w') as f_d, open(args['sparse_path'], 'w') as f_s
         cat_feats = set()
         for j in range(1, 9):
             field = 'C{0}'.format(j)
-            if j == 2:
-                for i in row[field].split(';'):
-                    key = 'C2-' + i
-                    cat_feats.add(key)
-            else:
-                key = field + '-' + row[field]
-                cat_feats.add(key)
+            key = field + '-' + row[field]
+            cat_feats.add(key)
 
         feats = []
         for j, feat in enumerate(target_cat_feats, start=1):
