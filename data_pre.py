@@ -84,9 +84,13 @@ df.rename(columns={'item_id':'C1','item_category_list':'C2','item_brand_id':'C3'
 #修改is_trade列名为Label
 df.rename(columns={'is_trade':'Label'}, inplace = True)
 
+#item_category_list列 数据处理
+df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].str.split(';', -1).str
+df['C2'] = str(df['item_category_2'])
+
 new_columns = ['Label','I1','I2','I3','I4','I5','I6','I7','I8','I9','I10','I11','I12','I13','C1','C2','C3','C4','C5','C6','C7','C8']
-df.iloc[:20000].to_csv("tr_2w.csv",index=False,columns=new_columns)
-df.iloc[20001:28000].to_csv("te_8k.csv",index=False,columns=new_columns)										
+df.sample(n=20000).to_csv("tr_2w.csv",index=False,columns=new_columns)
+df.sample(n=8000).to_csv("te_8k.csv",index=False,columns=new_columns)									
 
 '''
 # split for item_property_list
