@@ -94,12 +94,13 @@ item_category_3 只有2个值，，而且出现频率太低，才几百，相对
 df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].str.split(';', -1).str
 df['C2'] = df['item_category_2']
 
+#C2 数据转换
+le.fit(df['C2'])
+df['C2']=le.transform(df['C2'])
+
 new_columns = ['Label','I1','I2','I3','I4','I5','I6','I7','I8','I9','I10','I11','I12','I13','C1','C2','C3','C4','C5','C6','C7','C8']
-df = df[new_columns]
-df_tr = df.sample(n=20000)
-df_te = df.sample(n=8000)
-df_tr.to_csv("./output/tr.csv")
-df_te.to_csv("./output/te.csv")
+df.sample(n=20000).to_csv("./output/tr.csv",index=False,columns=new_columns)
+df.sample(n=8000).to_csv("./output/te.csv",index=False,columns=new_columns)
 
 counts = collections.defaultdict(lambda : [0, 0, 0])        
 for i in range(0, len(df)):
@@ -122,8 +123,8 @@ with open('./output/fc.trva.t10.txt', 'w') as f_t10:
         f_t10.write(key+','+str(neg)+','+str(pos)+','+str(total)+','+str(ratio)+'\n')
         
         
-target_cat_feats=['C6-0', 'C7-2005', 'C4-101', 'C2-8277336076276184272', 'C7-2002', 'C2-5755694407684602296', 'C6-1', 'C2-509660095530134768', 
-                  'C2-5799347067982556520','C3-1755', 'C4-99', 'C4-50', 'C2-7258015885215914736', 
+target_cat_feats=['C6-0', 'C7-2005', 'C4-101', 'C2-11', 'C7-2002', 'C2-8', 'C6-1', 'C2-7', 
+                  'C2-9','C3-1755', 'C4-99', 'C4-50', 'C2-10', 
                   'C4-78', 'C4-1','C4-38', 'C7-2004', 'C4-14', 'C4-60', 'C3-1594', 'C3-1144', 'C8-2802', 'C4-66', 'C6-2', 'C3-92','C8-788']
 
 with open('./output/tr.gbdt.dense', 'w') as f_d, open('./output/tr.gbdt.sparse', 'w') as f_s:    
