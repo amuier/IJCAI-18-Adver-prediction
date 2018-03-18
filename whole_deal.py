@@ -95,10 +95,11 @@ df['item_category_1'], df['item_category_2'], df['item_category_3'] = df['C2'].s
 df['C2'] = df['item_category_2']
 
 new_columns = ['Label','I1','I2','I3','I4','I5','I6','I7','I8','I9','I10','I11','I12','I13','C1','C2','C3','C4','C5','C6','C7','C8']
+df = df[new_columns]
 df_tr = df.sample(n=20000)
 df_te = df.sample(n=8000)
-df_tr.to_csv("./output/tr.csv",index=False,columns=new_columns)
-df_te.to_csv("./output/te.csv",index=False,columns=new_columns)
+df_tr.to_csv("./output/tr.csv")
+df_te.to_csv("./output/te.csv")
 
 counts = collections.defaultdict(lambda : [0, 0, 0])        
 for i in range(0, len(df)):
