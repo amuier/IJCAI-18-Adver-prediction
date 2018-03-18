@@ -1,5 +1,8 @@
 # IJCAI-18-Adver-prediction
 
+数据放在data目录下
+
+
 编译
 # make
 
